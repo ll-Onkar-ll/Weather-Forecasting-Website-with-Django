@@ -1,0 +1,99 @@
+{% extends 'base_home.html' %}
+
+{% block content %}
+
+   <div class="bg jumbotron" id="acnt" style="border-radius: 0; margin: 0;background:  linear-gradient(to right, #00F260, #0575E6);">
+    <div class="mx-5 my-2">
+    
+	    <div class="modal-body" style="width: 100%; margin: auto;">
+        <div class="row align-items-center mb-0">
+        <div class="col-md">
+        <div class="d-flex justify-content-md-center mt-3">
+        {% load static %}
+        <img src="{% static fn %}" height="150px" width="150px" style="border-radius: 50%;">
+        </div>
+        <br><br>
+        <div class="d-flex justify-content-md-center">
+        <a class="btn btn-outline-light ml-sm-2" style="border-radius: 50px;" data-toggle="modal" href="#chngdp">Change</a>
+        </div>
+        <br><br>
+        </div>
+        <!--<br><br>-->
+        <div class="col-md">
+        <div>
+          <h5 class="text-light">User ID: <?php echo $usrid; ?></h5>
+        </div>
+        <br>
+        <div>
+          <h5 class="text-light">Name: <?php echo $name; ?></h5>
+        </div>
+        <br>
+        <div>
+          <h5 class="text-light">Email: <?php echo $email; ?></h5>
+        </div>
+        <br>
+        <div>
+          <h5 class="text-light">Purpose: <?php echo $pur; ?></h5>
+        </div>
+        <br>
+        <!--<div>
+          <a data-toggle="modal" href="#!" data-target="#Modal3"><h5 class="text-light">Change Password</h5>
+        </div>-->
+        </div>
+        </div>
+      </div>
+	<!--<br><br>
+	<a href="#" class="text-white" data-toggle="modal" data-target="#pl">Problem logging in?</a>-->
+	<br><br>
+	<!--<a href="#" class="text-white" data-toggle="modal" data-target="#fp">Forgot Password?</a>-->
+    </div>
+  </div>
+
+  <!--Change dp-->
+<div class="modal fade" id="chngdp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title text-light" id="exampleModalLabel">Change Profile Picture</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input class="text-white" name="file" type="file" accept="image/*" />
+      </div>
+      <div class="modal-footer">
+      <button type="submit" name="submit" value="upload" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px" style="width:100%;" aria-label="submit">Upload</button>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>  
+
+<!--change password-->
+  <?php include 'pass_change.php';
+  ?>
+
+<!--delete account-->
+  <?php include 'del_modal.php';
+  ?>
+
+
+  <script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+  {% endblock %}
+</body>
+
+</html>

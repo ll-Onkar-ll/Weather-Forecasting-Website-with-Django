@@ -1,0 +1,54 @@
+{% extends 'base_home.html' %}
+
+{% block content %}
+
+  <div class="bg jumbotron" id="acnt" style="border-radius: 0; margin: 0;background:  linear-gradient(to right, #00F260, #0575E6);">
+    <div class="mx-0 my-0">
+    <center>
+    <h2 class="text-white">Enter City and Country Code</h2>
+    <br><br>
+    <form method="POST" action="/prediction/" class="yoh form my-2 my-lg-0" >
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="city" style="color:#fff;">For Example, Delhi, IN</label>
+    <input type="text" class="form-control" id="city" aria-describedby="emailHelp" placeholder="Location" name="city">
+    </div>
+    <br>
+    <button class="btn btn-outline-light ml-0" type="submit" name="submit" value="getPrediction" style="border-radius: 50px;">Get Prediction</button>
+    </form>
+    </center>
+
+  <!--<br><br>
+  <a href="#" class="text-white" data-toggle="modal" data-target="#pl">Problem logging in?</a>-->
+  <br><br>
+  <!--<a href="#" class="text-white" data-toggle="modal" data-target="#fp">Forgot Password?</a>-->
+    </div>
+  </div>
+
+  <!--change password-->
+  <?php include 'pass_change.php';
+  ?>
+
+<!--delete account-->
+  <?php include 'del_modal.php';
+  ?>
+
+
+
+  <script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+{% endblock %}
+
+</body>
+
+</html>

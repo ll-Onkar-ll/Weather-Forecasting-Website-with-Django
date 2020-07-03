@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="shortcut icon" href="{% static "imgs/favicon.ico" %}" type="image/x-icon">
+  {% load static %}
+  <link type="text/css" rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+  <title>{% block title %}Weather{% endblock %}</title>
+
+  {% if flag %}
+  <script type="text/javascript">
+    $(window).on('load',function(){
+        $('#creat').modal('show');
+    });
+  </script>
+  {% endif %}
+  
+  <style>
+	  body, html {
+	    height: 100%;
+		margin: 0;
+		overflow-x: hidden;
+		scroll-behavior: smooth;
+	  }
+
+	  .bg {
+		background:  linear-gradient(to right, rgba(255,158,57,1) 0%, rgba(255,227,155,1) 65%, rgba(91,108,132,1) 51%, rgba(19,43,78,1) 100%);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	  }
+	
+	  .nv :hover, .nv :focus{
+		color: #ff6600;
+	  }
+
+	  .nav-link{
+	  	color: #888;
+	  }
+  </style>	  
+	  
+</head>
+
+<body>
+  <nav style="background: #455668;">
+    <div class="nav justify-content-end mb-2 mr-2 mr-sm-3">
+    <!--<img src="">-->
+	
+  <span class="text-white-50 text-right align-bottom"><a class="text-white-50" href="#creat" data-toggle="modal" >Create Account</a></span>
+	</div>
+	<div class="w-100 justify-content-sm-left nav" style="background: #eee;" id="navbarSupportedContent">
+	  <div style="background:white; height: 100px; width: 100px; margin: 10px;">
+	  	{% load static %}
+	  	<img src="{% static "imgs/logo.jpg" %}" height="100px" width="100px"></div>
+	  <div class="ml-2">
+	  <div class="row align-items-start">
+	  <div class="col" style="background: #eee; margin-left: 15px !important; margin-top: 15px !important; padding-left: 0 !important;">
+	    <h2 class="text-dark text-left" style="margin-right: auto;">Company</h2>
+	  </div>
+	  </div>
+	  <div class="row align-items-start" style="margin-top: 10px;">
+	  <div class="col"  style="margin-left: 0 !important;">
+      <ul class="nav justify-content-left"  style="margin-left: -15px !important; padding-left: 0 !important;">
+		<li class="nav-item nv actt">
+          <a style="color: #ff6600;" class="nav-link">HOME</a>
+		</li>
+		<li class="nav-item nv">
+		  <a class="nav-link" href="{% url 'about' %}">ABOUT</a>
+		</li>
+		<li class="nav-item nv">
+		  <a class="nav-link" href="contact.php" target="blank">CONTACT US</a>
+		</li>
+	  </ul>
+	  </div>
+	  </div>
+	  </div>
+	</div>
+  </nav>
+
+  <div class="bg jumbotron" id="acnt" style="border-radius: 0; margin: 0;">
+    <div class="row">
+    <div class="mx-5 my-2 col">
+    <h6 class="text-white">JOIN IN</h6>
+  <h1 class="text-white">Quick Predictions at Your Fingertips</h1>
+  <br>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+</div>
+<div class="col">
+      {% load static %}
+      <img class="mt-5" src="{% static "imgs/weathe.jpg" %}" height="350px" width="500px;"></div>
+  </div>
+  </div>
+
+<!--Create Modal-->
+<div class="modal fade" id="creat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title text-light" id="exampleModalCenterTitle">Create Account</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+    <form method="post" action="" name="signup" class="form my-2 my-lg-0" >
+      <div class="modal-body">
+        {% if form_crt.errors %}
+          {% for error in form_crt.non_field_errors %}
+            <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+              <span>{{ error|escape }}</span>
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% csrf_token %}
+    <div class="form-row">
+    <div class="form-group col-sm">
+    {% if form_crt.first_name.errors %}
+    <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+      {% for error in form_crt.first_name.errors %}
+        <span>{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label for="exampleInputEmail1" style="color:#fff;">Enter Name</label>
+    <input type="text" class="form-control" id="first_name" aria-describedby="emailHelp" placeholder="First" name="first_name" value="{{ form_crt.first_name.value }}">
+    </div>
+    <div class="form-group col-sm">
+    {% if form_crt.last_name.errors %}
+    <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+      {% for error in form_crt.last_name.errors %}
+        <span>{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label class="sm-lbl text-dark" for="exampleInputEmail1">Enter Name</label>
+    <input type="text" class="form-control" id="last_name" aria-describedby="emailHelp" placeholder="Last" name="last_name" value="{{ form_crt.last_name.value }}">
+    </div>
+    </div>
+    <div class="form-group">
+    {% if form_crt.username.errors %}
+    <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+      {% for error in form_crt.username.errors %}
+        <span>{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label for="exampleInputEmail1" style="color:#fff;">Enter User ID</label>
+    <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="User ID" name="username" value="{{ form_crt.username.value }}">
+    </div>
+    <div class="form-group">
+    {% if form_crt.email.errors %}
+    <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+      {% for error in form_crt.email.errors %}
+        <span>{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label for="exampleInputEmail1" style="color:#fff;">Enter email</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email" name="email" value="{{ form_crt.email.value }}">
+    </div>
+    <div class="form-group">
+    {% if form_crt.password1.errors %}
+    <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+      {% for error in form_crt.password1.errors %}
+        <span>{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label for="exampleInputEmail1" style="color:#fff;">Enter password</label>
+    <input type="password" class="form-control" id="password1" aria-describedby="emailHelp" placeholder="Password" name="password1" value="{{ form_crt.password1.value }}">
+    </div>
+    <div class="form-group">
+    {% if form_crt.password2.errors %}
+    <div class="alert alert-danger mb-0 pt-0" style="height: 30px;">
+      {% for error in form_crt.password2.errors %}
+        <span class="align-middle">{{ error|escape }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label for="exampleInputEmail1" style="color:#fff;">Confirm password</label>
+    <input type="password" class="form-control" id="password2" aria-describedby="emailHelp" placeholder="Password" name="password2" value="{{ form_crt.password2.value }}">
+    </div>
+    <!--<div class="form-group">
+    <label for="exampleInputEmail1" style="color:#fff;">Enter Purpose of use</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Purpose" name="pur">
+    </div>-->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-light ml-sm-2" type="submit" name="submit" value="signup">Create Account</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+  <footer class="page-footer font-small pt-2" id="cnt" style="background-color: #455668;">
+
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+
+      <!-- Footer links -->
+      <div class="row text-center text-md-left mt-3 pb-3 align-items-center">
+      	<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-0">
+          <a href="!#" data-toggle="modal" data-target="#creat" style="color: #fff;">Create Account</a>
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-0">
+          <a href="{% url 'about' %}" style="color: #fff;">About</a>
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-0">
+          <a href="contact.php" target="blank" style="color: #fff;">Contact Us</a>
+        </div>
+      </div>
+      <!-- Footer links -->
+
+      <hr>
+
+      <!-- Grid row -->
+      <div class="row d-flex align-items-center">
+
+        <!-- Grid column -->
+        <div class="col-md-7 col-lg-8">
+
+          <!--Copyright-->
+          <p class="text-center text-md-left text-white">© 2019 Copyright:
+            <a class="text-white" href="#!">
+              <strong>BlackThunder Corp.</strong>
+            </a>
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-5 col-lg-4 ml-lg-0">
+
+          <!-- Social buttons -->
+          <div class="text-center text-md-right">
+            <ul class="list-unstyled list-inline">
+              <li class="list-inline-item">
+                <a href="https://www.facebook.com/ISTE.VIT/" target="blank" class="btn-floating btn rgba-white-slight mx-1">
+                  <i class="fab fa-facebook fa-lg" style="color: #3B5998; background:#fff; width: 80%;"></i>
+                </a>
+              </li>
+              <li class="list-inline-item" >
+                <a href="https://www.instagram.com/iste_vit_vellore/" class="btn-floating btn rgba-white-slight mx-1">
+                  <i class="fab fa-instagram fa-lg text-center" style="color: #fff; background: linear-gradient(60deg, #ffdc7d, #f46f30, #c32aa3, #7232bd);"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.linkedin.com/company/indian-society-for-technical-education/" target="blank" class="btn-floating btn rgba-white-slight mx-1">
+                  <i class="fab fa-linkedin fa-lg" style="color: #0077B5; background:#fff; width: 80%;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  {% load static %}
+  <script src="{% static "js/bootstrap.js" %}"></script>
+
+</body>
+
+</html>

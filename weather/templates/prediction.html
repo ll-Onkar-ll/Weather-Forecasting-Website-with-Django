@@ -1,0 +1,106 @@
+{% extends 'base_home.html' %}
+
+{% block content %}
+    <div class="bg jumbotron" id="acnt" style="border-radius: 0; margin: 0; background:  linear-gradient(to right, #00F260, #0575E6);">
+        <div class="mx-0 my-0">
+        <h1 class="text-white">{{ pred.city.name }}, {{ pred.city.country }}</h1>
+        <br><br>
+        <center>
+        <form class="form my-2 my-lg-0" >
+            <div class="form-group">
+          <select name="Datte" id="datte" class="form-control" style="width:15%;" data-toggle="tooltip" data-placement="top" title="Choose the Date and Time">
+            <option selected>Choose...</option>
+            {% for i in pred.list %}
+            <option value="{{ forloop.counter0 }}">{{ i.dt_txt }}</option>
+            {% endfor %}
+          </select>
+          </div>
+          <br><br>
+          <button class="btn btn-outline-light ml-0" type="button" id="dat" onclick="showReport()" style="border-radius: 50px;">Select</button>
+        </form>
+        </center>
+        <br>
+     
+      <div id="rep"> 
+        <hr style="border-color:#ddd;">
+
+        <h3 class="text-white" id="hed"></h3>
+        <br>
+
+          <div>
+            <div class="d-flex justify-content-center flex-row"><img id="logo" height="100px" width="100px"></div>
+          <div class="d-flex justify-content-center flex-row"><h2 class="text-white"><p id="desc"></p></h2></div>
+          <div class="d-flex justify-content-center flex-row">
+            <ul class="text-white list-group list-group-flush">   
+            <li class="list-group-item" style="background: transparent;" id="temp"></li>
+            <li class="list-group-item" style="background: transparent;" id="cld"></li>
+            <li class="list-group-item" style="background: transparent;" id="hum"></li>
+            <li class="list-group-item" style="background: transparent;" id="spd"></li>
+            <li class="list-group-item" style="background: transparent;" id="prs"><br></li>
+            </ul>
+            </div>
+              </div>
+          </div>
+    
+  </div>
+  </div>
+
+  <!--change password-->
+  <?php include 'pass_change.php';
+  ?>
+
+<!--delete account-->
+  <?php include 'del_modal.php';
+  ?>
+
+{% endblock %}
+
+{% block scrpt %}
+
+  <script type="text/javascript">
+    function showReport(){
+      var str = '{{ res|safe }}';
+      var data  = JSON.parse(str);
+      var e = document.getElementById("datte");
+      var val = e.options[e.selectedIndex].value;
+      var rep = 'Date: '+data['list'][val]['dt_txt'];
+      document.getElementById('hed').innerHTML = rep;
+      var sr = "http://openweathermap.org/img/w/" + data['list'][val]['weather'][0]['icon']+".png";
+      document.getElementById("logo").src = sr;
+      var desc = data['list'][val]['weather'][0]['description'];
+      document.getElementById("desc").innerHTML = desc;
+      var temp = "<b>Temperature: " + data['list'][val]['main']['temp'] + "</b>";
+      document.getElementById("temp").innerHTML = temp;
+      var cld = "<b>Clouds: " + data['list'][val]['clouds']['all'] + "</b>";
+      document.getElementById("cld").innerHTML = cld;
+      var hum = "<b>Humidity: " + data['list'][val]['main']['humidity'] + "</b>";
+      document.getElementById("hum").innerHTML = hum;
+      var spd = "<b>Wind Speed: " + data['list'][val]['wind']['speed'] + "</b>";
+      document.getElementById("spd").innerHTML = spd;
+      var prs = "<b>Pressure: " + data['list'][val]['main']['pressure'] + "</b>";
+      document.getElementById("prs").innerHTML = prs;
+    }
+  </script>
+
+  <script>
+     $(document).ready(function(){
+        $('#rep').hide();
+    });
+     $('#dat').click(function(){
+        $('#rep').show();
+     });
+  </script>
+
+  <script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
+{% endblock %}

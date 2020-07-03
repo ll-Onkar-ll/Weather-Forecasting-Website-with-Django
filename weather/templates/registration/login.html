@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+	<h4 class="text-white">To join, enter your User ID and <br> password.</h4>
+  	<br><br><br><br>
+
+	{% if form.errors %}
+    	<p>Your username and password didn't match. Please try again.</p>
+  	{% endif %}
+  	
+  	{% if next %}
+    	{% if user.is_authenticated %}
+      		<p>Your account doesn't have access to this page. To proceed,
+      		please login with an account that has access.</p>
+    	{% else %}
+      		<p>Please login to see this page.</p>
+    	{% endif %}
+  	{% endif %}
+
+
+	<form method="post" action="{% url 'login' %}" class="form-inline">
+	  {% csrf_token %}
+	  <div class="form-group mr-sm-3 mb-2">
+        <label for="inputusrid" class="sr-only">User ID</label>
+  		<input id="your_name" type="text" style="border-radius: 0;" class="form-control-lg form-control" placeholder="Enter user id" name="username">
+  		<!--{{ form.username }}-->
+      </div>
+	  <div class="form-group mr-sm-2 mb-2">
+        <label for="inputApplication" class="sr-only">Password</label>
+        <input id="your_pass" type="password" style="border-radius: 0;" class="form-control-lg form-control" placeholder="Enter password" name="password">
+        <!--{{ form.password }}-->
+      </div>
+	  <button type="submit" id="usr" name="submit" value="login" class="btn btn-outline-light ml-sm-2 mb-2" style="border-radius: 50px">&emsp;&emsp;Join &emsp;&emsp;</button>
+	</form>
+	<!--<br><br>
+	<a href="#" class="text-white" data-toggle="modal" data-target="#pl">Problem logging in?</a>-->
+	<br><br>
+	<a href="{% url 'password_reset' %}" class="text-white">Forgot Password?</a>
+
+{% endblock %}
