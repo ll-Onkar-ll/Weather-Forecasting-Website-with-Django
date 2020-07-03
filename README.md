@@ -1,4 +1,4 @@
-# Weather-Forecasting-Website-with-Django
+# Weather Forecasting Website with Django
 A simple website which shows you weather data of a city for the next five days at three hour intervals. Django framework has been used as the backend. MongoDB is used as the database
 Openweathermap API is used to get the weather data.
 
