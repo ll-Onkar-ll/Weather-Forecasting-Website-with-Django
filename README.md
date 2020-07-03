@@ -3,4 +3,5 @@ A simple website which shows you weather data of a city for the next five days a
 Openweathermap API is used to get the weather data.
 
 To use change the database credentials in weather/settings.py.
+
 Add your openweathermap  API key to the request URL in weather/views.py
